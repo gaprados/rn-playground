@@ -27,10 +27,11 @@ const COLORS = {
 export const ChecklistTypeContainer = styled.Pressable<StatusTypes>`
   margin: 0 8px;
   padding: 16px;
-  min-width: 128px;
+  width: 140px;
   background: ${(props) => COLORS[props.status].background};
   display: flex;
   align-items: flex-start;
+  justify-content: space-between;
   border: 1px solid ${(props) => COLORS[props.status].border};
 `;
 

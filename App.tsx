@@ -1,8 +1,11 @@
-import { ScrollView, StyleSheet, View } from "react-native";
+import React from "react";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import { ChecklistType } from "./src/components/ChecklistType";
 import { ThemeProvider } from "./src/config/theme";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { NavigationContainer } from "@react-navigation/native";
 
 interface ItemProps {
   title: string;
@@ -13,7 +16,7 @@ interface ItemProps {
 
 const temp_items: ItemProps[] = [
   {
-    title: "Conferência",
+    title: "Reparo automotivo",
     icon: (
       <MaterialCommunityIcons name="clipboard-text-search-outline" size={32} />
     ),
@@ -21,7 +24,7 @@ const temp_items: ItemProps[] = [
     statusDate: "Hoje",
   },
   {
-    title: "Mecânico",
+    title: "Inspeção cautelar",
     icon: <MaterialCommunityIcons name="wrench-outline" size={32} />,
     status: "pending",
   },
@@ -37,8 +40,37 @@ const temp_items: ItemProps[] = [
     statusDate: "3 dias atrás",
   },
 ];
+function TempComponent1() {
+  return <Text>Component 1</Text>;
+}
+function TempComponent2() {
+  return <Text>Component 1</Text>;
+}
+function TempComponent3() {
+  return <Text>Component 1</Text>;
+}
+
+function Home() {
+  return (
+    <View>
+      <ScrollView horizontal style={styles.view}>
+        {temp_items.map((item) => (
+          <ChecklistType
+            key={item.title}
+            title={item.title}
+            icon={item.icon}
+            status={item.status}
+            statusDate={item?.statusDate}
+            destination="Home"
+          />
+        ))}
+      </ScrollView>
+    </View>
+  );
+}
 
 export default function App() {
+  const Stack = createNativeStackNavigator();
   return (
     <ThemeProvider>
       <ScrollView
@@ -46,19 +78,11 @@ export default function App() {
         keyboardShouldPersistTaps="handled"
         contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}
       >
-        <View>
-          <ScrollView horizontal style={styles.view}>
-            {temp_items.map((item) => (
-              <ChecklistType
-                key={item.title}
-                title={item.title}
-                icon={item.icon}
-                status={item.status}
-                statusDate={item?.statusDate}
-              />
-            ))}
-          </ScrollView>
-        </View>
+        <NavigationContainer>
+          <Stack.Navigator>
+            <Stack.Screen name="Home" component={Home} />
+          </Stack.Navigator>
+        </NavigationContainer>
       </ScrollView>
     </ThemeProvider>
   );
@@ -67,11 +91,11 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 22,
   },
 
   view: {
     flex: 1,
+    paddingHorizontal: 22,
     flexDirection: "row",
   },
 });

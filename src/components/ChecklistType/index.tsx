@@ -1,3 +1,4 @@
+import { NativeStackNavigationHelpers } from "@react-navigation/native-stack/lib/typescript/src/types";
 import {
   ChecklistTypeContainer,
   StatusContainer,
@@ -13,6 +14,8 @@ interface CheckListTypeProps {
   status: "draft" | "pending" | "in_progress" | "done";
   // FIXME: Ajustar (e possivelmente tratar) formato da data vindo do BE
   statusDate?: any;
+  navigation?: NativeStackNavigationHelpers;
+  destination: string;
 }
 
 export function ChecklistType({
@@ -20,6 +23,8 @@ export function ChecklistType({
   title,
   status,
   statusDate,
+  navigation,
+  destination,
 }: CheckListTypeProps) {
   // TODO: Validar chaves desse formato de object mapping
   const statusType = {
@@ -29,8 +34,12 @@ export function ChecklistType({
     done: "Concluído",
   };
 
+  function handlePress() {
+    navigation?.navigate(destination);
+  }
+
   return (
-    <ChecklistTypeContainer status={status}>
+    <ChecklistTypeContainer status={status} onPress={handlePress}>
       {icon}
       <Title>{title}</Title>
       <StatusContainer>
